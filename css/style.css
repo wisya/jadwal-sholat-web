@@ -64,14 +64,14 @@ body {
 }
 
 .app-bar {
-    background-color: var(--surface);
+    background-color: transparent;
     color: var(--text-primary);
     height: 64px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 16px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    box-shadow: none;
     z-index: 10;
 }
 
@@ -101,25 +101,25 @@ body {
 }
 
 .info-header {
-    background-color: var(--header-bg);
-    color: var(--header-text);
+    background-color: var(--surface);
+    color: var(--text-primary);
     padding: 16px;
-    border-bottom-left-radius: 24px;
-    border-bottom-right-radius: 24px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
 .info-header h2 {
     font-size: 22px;
     font-weight: 700;
+    color: var(--text-primary);
     margin-bottom: 4px;
 }
 
 .date-row {
     font-size: 14px;
-    color: var(--header-text);
-    opacity: 0.9;
+    color: var(--text-secondary);
     font-weight: 500;
     display: flex;
     justify-content: center;
@@ -128,7 +128,7 @@ body {
 }
 
 .divider {
-    color: var(--header-text);
+    color: var(--text-secondary);
     opacity: 0.5;
 }
 
