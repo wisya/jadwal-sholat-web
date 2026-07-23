@@ -5,7 +5,8 @@
     --on-primary: #FFFFFF;
     --primary-container: #B7F397;
     --on-primary-container: #042100;
-    --secondary: #9C4300;
+    --secondary: #FF6F00;
+    --orange-icon: #FF6F00;
     --on-secondary: #FFFFFF;
     --secondary-container: #FFDCC8;
     --on-secondary-container: #341000;
@@ -24,7 +25,8 @@
     --on-primary: #0A3900;
     --primary-container: #205108;
     --on-primary-container: #B7F397;
-    --secondary: #FFB593;
+    --secondary: #FFA726;
+    --orange-icon: #FFA726;
     --on-secondary: #542100;
     --secondary-container: #783200;
     --on-secondary-container: #FFDCC8;
@@ -62,26 +64,27 @@ body {
 }
 
 .app-bar {
-    background-color: var(--header-bg);
-    color: var(--header-text);
+    background-color: var(--surface);
+    color: var(--text-primary);
     height: 64px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 16px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
     z-index: 10;
 }
 
 .app-bar h1 {
     font-size: 20px;
     font-weight: 500;
+    color: var(--text-primary);
 }
 
 .app-bar .actions button {
     background: none;
     border: none;
-    color: var(--header-text);
+    color: var(--orange-icon);
     font-size: 20px;
     padding: 12px;
     cursor: pointer;
@@ -90,7 +93,7 @@ body {
 }
 
 .app-bar .actions button:hover {
-    background-color: rgba(255,255,255,0.1);
+    background-color: var(--surface-variant);
 }
 
 .hidden {
@@ -141,7 +144,7 @@ body {
 
 .countdown-icon {
     font-size: 24px;
-    color: var(--primary);
+    color: var(--orange-icon);
     margin-right: 12px;
 }
 
