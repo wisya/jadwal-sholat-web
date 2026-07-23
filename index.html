@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Aplikasi Jadwal Sholat Indonesia offline & presisi dengan kalkulasi Kemenag RI, kompas arah kiblat, dan tanggal Hijriah.">
+    <meta name="theme-color" content="#386A20">
+    <title>Jadwal Sholat Indonesia</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.svg">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Font Awesome for AppBar icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script src="js/adhan.js"></script>
+</head>
+<body>
+    <div id="app">
+        <header class="app-bar">
+            <h1>Jadwal Sholat</h1>
+            <div class="actions">
+                <button id="btn-gps" title="Gunakan GPS"><i class="fas fa-location-crosshairs"></i></button>
+                <button id="btn-manual" title="Pilih Kota Manual"><i class="fas fa-location-dot"></i></button>
+                <button id="btn-qibla" title="Arah Kiblat"><i class="fas fa-compass"></i></button>
+                <button id="btn-theme" title="Ganti Tema"><i class="fas fa-moon"></i></button>
+            </div>
+        </header>
+
+        <main id="content" class="hidden">
+            <div class="info-header">
+                <h2 id="city-name">Memuat Lokasi...</h2>
+                <div class="date-row">
+                    <span id="gregorian-date"></span>
+                    <span class="divider">|</span>
+                    <span id="hijri-date"></span>
+                </div>
+            </div>
+
+            <div id="countdown-widget" class="countdown-card hidden">
+                <i class="fas fa-stopwatch countdown-icon"></i>
+                <span id="next-prayer-name" class="next-prayer">Menuju...</span>
+                <span class="spacer"></span>
+                <span id="countdown-timer" class="timer">00:00:00</span>
+            </div>
+
+            <div id="prayer-list" class="prayer-list">
+                <!-- Prayer cards will be injected here -->
+            </div>
+        </main>
+
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Memuat Jadwal Sholat...</p>
+        </div>
+    </div>
+
+    <!-- Modal Cari Kota -->
+    <div id="city-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3><i class="fas fa-city"></i> Pilih Kota</h3>
+                <button id="btn-close-modal" class="btn-close" title="Tutup"><i class="fas fa-xmark"></i></button>
+            </div>
+            <form id="city-form" class="modal-body">
+                <div class="input-group">
+                    <input type="text" id="city-input" placeholder="Ketik nama kota (misal: Bandung)" autocomplete="off" required />
+                    <button type="submit" class="btn-primary"><i class="fas fa-search"></i> Cari</button>
+                </div>
+                <div class="quick-cities">
+                    <span class="quick-title">Kota Populer:</span>
+                    <div class="chips-container">
+                        <button type="button" class="chip-btn" data-city="Jakarta">Jakarta</button>
+                        <button type="button" class="chip-btn" data-city="Bandung">Bandung</button>
+                        <button type="button" class="chip-btn" data-city="Surabaya">Surabaya</button>
+                        <button type="button" class="chip-btn" data-city="Yogyakarta">Yogyakarta</button>
+                        <button type="button" class="chip-btn" data-city="Medan">Medan</button>
+                        <button type="button" class="chip-btn" data-city="Makassar">Makassar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Arah Kiblat -->
+    <div id="qibla-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3><i class="fas fa-compass"></i> Arah Kiblat</h3>
+                <button id="btn-close-qibla" class="btn-close" title="Tutup"><i class="fas fa-xmark"></i></button>
+            </div>
+            <div class="modal-body qibla-body">
+                <div class="qibla-info">
+                    <span id="qibla-degree" class="qibla-degree">--°</span>
+                    <span id="qibla-direction-text" class="qibla-label">--</span>
+                </div>
+                <div class="compass-wrapper">
+                    <div class="crosshair-v" title="Garis Acuan Vertikal Layar"></div>
+                    <div class="crosshair-h" title="Garis Acuan Horisontal Layar"></div>
+                    <div class="crosshair-center"></div>
+                    <div id="compass-dial" class="compass-dial">
+                        <span class="compass-mark north">U <small>0°</small></span>
+                        <span class="compass-mark east">T <small>90°</small></span>
+                        <span class="compass-mark south">S <small>180°</small></span>
+                        <span class="compass-mark west">B <small>270°</small></span>
+                        <div id="qibla-pointer-line" class="qibla-pointer-line"></div>
+                        <div id="kaaba-pointer" class="kaaba-pointer" title="Ka'bah">
+                            <i class="fas fa-kaaba"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="sensor-toggle-container">
+                    <label class="toggle-label">
+                        <input type="checkbox" id="chk-live-compass">
+                        <span>Gunakan Sensor Kompas HP (Live)</span>
+                    </label>
+                </div>
+                <p class="qibla-hint"><i class="fas fa-circle-info"></i> Mode Statis: Utara (0°/Atas), Timur (90°/Kanan), Selatan (180°/Bawah), Barat (270°/Kiri).</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js?v=3"></script>
+</body>
+</html>

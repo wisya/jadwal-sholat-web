@@ -1,0 +1,591 @@
+:root {
+    --primary: #386A20;
+    --on-primary: #FFFFFF;
+    --primary-container: #B7F397;
+    --on-primary-container: #042100;
+    --secondary: #9C4300;
+    --on-secondary: #FFFFFF;
+    --secondary-container: #FFDCC8;
+    --on-secondary-container: #341000;
+    --surface: #FDFDF5;
+    --background: #FDFDF5;
+    --surface-variant: #DFE4D7;
+    --outline: #74796D;
+    --text-primary: #1A1C18;
+    --text-secondary: #43483E;
+}
+
+[data-theme="dark"] {
+    --primary: #86DB60;
+    --on-primary: #0A3900;
+    --primary-container: #205108;
+    --on-primary-container: #B7F397;
+    --secondary: #FFB593;
+    --on-secondary: #542100;
+    --secondary-container: #783200;
+    --on-secondary-container: #FFDCC8;
+    --surface: #1E221B;
+    --background: #121411;
+    --surface-variant: #2A3026;
+    --outline: #8E9386;
+    --text-primary: #E2E3DD;
+    --text-secondary: #C3C8BC;
+}
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+}
+
+#app {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: var(--background);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+.app-bar {
+    background-color: var(--primary);
+    color: var(--on-primary);
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    z-index: 10;
+}
+
+.app-bar h1 {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.app-bar .actions button {
+    background: none;
+    border: none;
+    color: var(--on-primary);
+    font-size: 20px;
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.app-bar .actions button:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+.hidden {
+    display: none !important;
+}
+
+.info-header {
+    background-color: var(--primary);
+    color: var(--on-primary);
+    padding: 16px;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.info-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.date-row {
+    font-size: 14px;
+    color: var(--on-primary);
+    opacity: 0.9;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.divider {
+    color: var(--on-primary);
+    opacity: 0.5;
+}
+
+.countdown-card {
+    background-color: var(--primary-container);
+    border: 1px solid #386A204D;
+    border-radius: 16px;
+    padding: 16px;
+    margin: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.countdown-icon {
+    font-size: 24px;
+    color: var(--primary);
+    margin-right: 12px;
+}
+
+.next-prayer {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--on-primary-container);
+}
+
+.spacer {
+    flex-grow: 1;
+}
+
+.timer {
+    font-size: 22px;
+    font-weight: 900;
+    font-family: monospace;
+    color: var(--primary);
+}
+
+.prayer-list {
+    padding: 0 16px 16px 16px;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.prayer-card {
+    background-color: var(--surface);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+    border: 1px solid transparent;
+}
+
+.prayer-card.active {
+    background-color: var(--primary-container);
+    border: 1px solid #386A204D;
+    border-left: 5px solid var(--primary);
+    box-shadow: 0 4px 12px rgba(56, 106, 32, 0.15);
+    transform: scale(1.01);
+}
+
+.prayer-card.active .prayer-name {
+    color: var(--on-primary-container);
+}
+
+.prayer-card.active .prayer-time {
+    color: var(--primary);
+    font-weight: 800;
+}
+
+.active-badge {
+    font-size: 11px;
+    font-weight: 700;
+    background-color: var(--primary);
+    color: var(--on-primary);
+    padding: 3px 8px;
+    border-radius: 12px;
+    margin-left: 8px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.prayer-icon {
+    color: var(--secondary);
+    margin-right: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.prayer-icon svg {
+    width: 28px;
+    height: 28px;
+}
+
+.prayer-name {
+    font-size: 18px;
+    font-weight: 700;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+
+.prayer-time {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* Modal Dialog */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 16px;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.modal-card {
+    background-color: var(--surface);
+    width: 100%;
+    max-width: 440px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    animation: slideUp 0.25s ease-out;
+}
+
+.modal-header {
+    background-color: var(--primary);
+    color: var(--on-primary);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-close {
+    background: transparent;
+    border: none;
+    color: var(--on-primary);
+    font-size: 20px;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.btn-close:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.input-group {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.input-group input {
+    flex-grow: 1;
+    padding: 12px 16px;
+    border: 1.5px solid var(--outline);
+    border-radius: 10px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.input-group input:focus {
+    border-color: var(--primary);
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: var(--on-primary);
+    border: none;
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: #2e571a;
+}
+
+.quick-cities {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.quick-title {
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.chips-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.chip-btn {
+    background-color: var(--surface-variant);
+    color: var(--text-primary);
+    border: none;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.chip-btn:hover {
+    background-color: var(--primary-container);
+    color: var(--on-primary-container);
+    transform: translateY(-1px);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Loading */
+.loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: var(--primary);
+}
+
+.spinner {
+    border: 4px solid #386A2033;
+    border-top: 4px solid var(--primary);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 16px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+/* Qibla Compass Modal */
+.qibla-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px;
+}
+
+.qibla-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.qibla-degree {
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--primary);
+    line-height: 1;
+}
+
+.qibla-label {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+.compass-wrapper {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    margin: 10px 0 24px 0;
+}
+
+.compass-dial {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: var(--surface-variant);
+    border: 6px solid var(--primary);
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    overflow: hidden;
+}
+
+.crosshair-v {
+    position: absolute;
+    top: -12px;
+    bottom: -12px;
+    left: 50%;
+    width: 2px;
+    margin-left: -1px;
+    background-color: var(--primary);
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.crosshair-h {
+    position: absolute;
+    left: -12px;
+    right: -12px;
+    top: 50%;
+    height: 2px;
+    margin-top: -1px;
+    background-color: var(--primary);
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.crosshair-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    margin-top: -4px;
+    margin-left: -4px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    opacity: 0.75;
+    pointer-events: none;
+    z-index: 11;
+}
+
+
+
+
+.compass-mark {
+    position: absolute;
+    font-weight: 900;
+    font-size: 13px;
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1;
+}
+
+.compass-mark small {
+    font-size: 8px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-top: 1px;
+}
+
+.compass-mark.north { top: 6px; left: 50%; transform: translateX(-50%); color: #D32F2F; }
+.compass-mark.east { right: 6px; top: 50%; transform: translateY(-50%); }
+.compass-mark.south { bottom: 6px; left: 50%; transform: translateX(-50%); }
+.compass-mark.west { left: 6px; top: 50%; transform: translateY(-50%); }
+
+
+.kaaba-pointer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 32px;
+    height: 32px;
+    margin-top: -16px;
+    margin-left: -16px;
+    color: var(--secondary);
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-origin: center center;
+    z-index: 5;
+    transition: transform 0.3s ease;
+}
+
+.qibla-pointer-line {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    width: 3px;
+    height: 75px;
+    margin-left: -1.5px;
+    background: linear-gradient(to top, transparent 20%, var(--secondary) 100%);
+    transform-origin: bottom center;
+    border-radius: 2px;
+    z-index: 4;
+    transition: transform 0.3s ease;
+}
+
+
+.sensor-toggle-container {
+    margin-bottom: 16px;
+    background-color: var(--surface-variant);
+    padding: 8px 16px;
+    border-radius: 20px;
+}
+
+.toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    cursor: pointer;
+}
+
+.toggle-label input {
+    accent-color: var(--primary);
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.qibla-hint {
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-align: center;
+    line-height: 1.4;
+    background-color: var(--surface-variant);
+    padding: 10px 14px;
+    border-radius: 10px;
+}
+
