@@ -386,11 +386,25 @@ function formatTime(dateObj) {
     return `${h}:${m}`;
 }
 
+function getActivePrayerKey(prayerTimes) {
+    if (!prayerTimes) return 'none';
+    let activeKey = prayerTimes.currentPrayer();
+    if (activeKey === 'sunrise') {
+        const now = new Date();
+        const diffMs = now.getTime() - prayerTimes.sunrise.getTime();
+        // Syuruq hanya aktif selama 15 menit setelah waktu syuruq tiba
+        if (diffMs > 15 * 60 * 1000) {
+            activeKey = 'none';
+        }
+    }
+    return activeKey;
+}
+
 function renderPrayerList(times, prayerTimes) {
     const list = document.getElementById('prayer-list');
     list.innerHTML = '';
     
-    const activeKey = prayerTimes ? prayerTimes.currentPrayer() : 'none';
+    const activeKey = getActivePrayerKey(prayerTimes);
     
     prayers.forEach(p => {
         const pTime = times[p.key];
